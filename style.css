@@ -1,0 +1,267 @@
+/* THEME: lavender to cream. Edit colors here.
+   Each sector has a gradient (--sN-a to --sN-b). The sectors move from light lavender (1)
+   through a lavender-cream mix (2) to cream (3). The About box reuses the gradient of sector 2. */
+:root {
+  --gutter: max(1.5rem, calc(50% - 36rem)); /* side space that keeps content centered, max 72rem wide */
+  --page: #ccc0da;
+  --tile: #faf8fe;
+  --ink: #2a2140;
+  --muted: #54486f;
+  --line: #d5c7ee;
+  --accent: #5a37b0;
+  --on-accent: #ffffff;
+  --highlight: #d6c8f3; /* lavender highlighter (headings, buttons in the personal sector) */
+  --s1-a: #e2d5f7; --s1-b: #e7dcf5; /* light lavender */
+  --s2-a: #ece3f4; --s2-b: #f4f3ee; /* lavender-cream mix */
+  --s3-a: #fcf8ef; --s3-b: #f4ebd8; /* cream */
+}
+
+#about      { --a: var(--s1-a); --b: var(--s1-b); }
+#experience { --a: var(--s2-a); --b: var(--s2-b); }
+#personal   { --a: var(--s3-a); --b: var(--s3-b); }
+
+/* PERSONAL SECTOR: its own cream palette */
+#personal {
+  --muted: #5d5170;
+  --line: #e8dcc6;
+  --tile: #fffdf8;
+  --map-land: #d6c9f2;
+  --map-visited: #5a37b0;
+}
+
+/* BASE (mobile first: everything stacked, wide-screen layout is at the bottom) */
+* { box-sizing: border-box; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font: 1.25rem/1.65 Charter, "Iowan Old Style", Georgia, serif;
+}
+h1, h2, h3, p, ul { margin: 0; }
+a { color: var(--accent); text-underline-offset: 0.2em; }
+a:focus-visible, button:focus-visible, .carousel:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+button {
+  padding: 0.25rem 0.9rem;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--tile);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+button:hover { border-color: var(--accent); }
+
+/* TABS: floating bar at the top. script.js adds .active to the tab of the visible sector */
+.tabs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem var(--gutter);
+  pointer-events: none; /* only the tabs and the button catch clicks */
+}
+.tabs > * { pointer-events: auto; }
+.tab-list {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: color-mix(in srgb, var(--tile) 85%, transparent);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.tab-list a {
+  padding: 0.25rem 1rem;
+  font-size: 1rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: 999px;
+}
+.tab-list a.active { background: var(--accent); color: var(--on-accent); }
+
+main { container-type: inline-size; } /* lets the carousel measure the full page width (cqw) */
+
+/* SECTORS: full-screen panels that stick to the top, so the next one slides over the previous.
+   script.js sets --stick so that a panel taller than the screen sticks once its bottom is reached. */
+.sector {
+  position: sticky;
+  top: var(--stick, 0px);
+  min-height: 100svh;
+  padding: 6rem var(--gutter) 5rem;
+  background: linear-gradient(165deg, var(--a), var(--b));
+}
+#experience, #personal {
+  border-radius: 3rem 3rem 0 0;
+  box-shadow: 0 -1.5rem 3rem -1.5rem rgb(40 20 90 / 0.35);
+}
+
+/* SCROLL ANIMATION: a panel shrinks and dims while the next one slides over it.
+   Needs scroll-driven animations (Chrome, Edge, Safari 26+); elsewhere panels just stack. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    main { timeline-scope: --to-experience, --to-personal; }
+    #experience { view-timeline: --to-experience; } /* progress of experience entering the screen */
+    #personal   { view-timeline: --to-personal; }
+    #about, #experience { animation: recede linear both; animation-range: entry 0% entry 100%; }
+    #about      { animation-timeline: --to-experience; }
+    #experience { animation-timeline: --to-personal; }
+  }
+}
+@keyframes recede { to { transform: scale(0.93); filter: brightness(0.8); } }
+
+/* HEADER */
+header { --portrait: 11rem; --stacked: 1; position: relative; display: grid; gap: 1.5rem; align-items: start; }
+header img {
+  order: -1;
+  width: var(--portrait);
+  height: var(--portrait);
+  border-radius: 6rem; /* a circle */
+  object-fit: cover;
+  justify-self: center;
+}
+
+header {
+  --portrait: 11rem;
+  --bg-size: 52rem; /* size of the backdrop image on the page (its circle is then bigger than the portrait) */
+  --bg-x: 0.644;    /* backdrop circle center, as a share of the image width (412 / 640) */
+  --bg-y: 0.258;    /* backdrop circle center, as a share of the image height (165 / 640) */
+  position: relative;
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* BACKDROP: the 640x640 half-opacity image behind the header (it does not fill the screen).
+   Its circle (centered at 412px, 165px of the image) sits exactly behind the portrait. */
+header::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: var(--bg-size);
+  height: var(--bg-size);
+  background: url(images/bg.png) center / cover no-repeat;
+  opacity: 0.5;
+  pointer-events: none;
+  /* portrait centered above the text: image turned 90 degrees counter-clockwise, circle behind the portrait */
+  left: calc(50% - var(--bg-y) * var(--bg-size));
+  top: calc(var(--portrait) / 2 - (1 - var(--bg-x)) * var(--bg-size));
+  transform: rotate(-90deg);
+}
+
+#about { overflow: clip; } /* the backdrop may reach past the screen edges */
+h1 { font-size: 3.5rem; line-height: 1.1; }
+header p { color: var(--muted); }
+.links { margin-top: 0.75rem; }
+.links a { margin-right: 1.5rem; }
+
+/* SECTIONS */
+section + section { margin-top: 4rem; }
+#about section {
+  margin-top: 3rem;
+  padding: 2.5rem;
+  /* sector 2's colors, slightly see-through so the backdrop image shows across the whole screen */
+  background: linear-gradient(165deg, color-mix(in srgb, var(--s2-a) 70%, transparent), color-mix(in srgb, var(--s2-b) 70%, transparent));
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem;
+}
+
+h2 { font-size: 1.125rem; font-weight: 600; color: var(--muted); margin-bottom: 1.25rem; }
+#personal h3 { width: fit-content; font-size: 1.25rem; font-weight: 600; line-height: 1.3; background: linear-gradient(transparent 60%, var(--highlight) 60%); } /* highlighter underline */
+#about h3 { width: fit-content; font-size: 1.25rem; font-weight: 600; line-height: 1.3; background: linear-gradient(transparent 60%, var(--highlight) 60%); } /* highlighter underline */
+#about h2, #experience h2 { width: fit-content; font-size: 1.25rem; font-weight: 600; line-height: 1.3; background: linear-gradient(transparent 60%, var(--highlight) 60%); } /* highlighter underline */
+h3 + * { margin-top: 0.4rem; }
+p + h3, ul + h3 { margin-top: 1.75rem; }
+.meta { color: var(--muted); font-size: 1.05rem; }
+
+/* TILES (projects, experience) */
+.tiles { display: grid; grid-auto-rows: minmax(19rem, 1fr); gap: 1.5rem; } /* every tile is the same size (at least 19rem tall) */
+article {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  background: var(--tile);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+}
+article p + p { margin-top: 0.5rem; }
+article p:last-of-type { flex: 1; } /* takes the free space, which pushes the preview and link to the bottom of the tile */
+article a { align-self: center; margin-top: 0.75rem; } /* centered */
+.logo {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.75rem;
+  padding: 0.35rem;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+}
+
+/* PDF PREVIEW: the browser's own PDF viewer in a small frame; hidden on touch screens, which can't show it */
+.preview {
+  display: block;
+  width: 15rem;
+  max-width: 100%;
+  height: 8rem;
+  margin: 0.75rem auto 0; /* centered */
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  pointer-events: none;
+}
+
+@media (hover: none) { .preview { display: none; } }
+
+/* INLINE LISTS (interests, hobbies) */
+.inline { padding: 0; list-style: none; }
+.inline li { display: inline; }
+.inline li:not(:last-child)::after { content: ", "; }
+
+/* PERSONAL: hobbies, travel map, photos */
+#personal button { background: var(--highlight); border-color: var(--highlight); }
+#personal button:hover { border-color: var(--accent); }
+#personal section { margin-inline: calc(50% - 50cqw + 1.5rem); } /* wider than the other sectors: 1.5rem from the screen edges */
+.personal-grid { display: grid; gap: 2.5rem; }
+
+#map { margin-top: 0.75rem; }
+#map svg { display: block; width: 100%; height: auto; }
+#map path { fill: var(--map-land); stroke: var(--tile); stroke-width: 0.5; }
+#map path.visited { fill: var(--map-visited); }
+
+/* CAROUSEL: photos are drawn on a canvas by script.js (curved band, full width).
+   The <figure> elements stay in the page for screen readers only. */
+.carousel {
+  position: relative;
+  margin: 0.75rem calc(50% - 50cqw) 0; /* extends to the screen edges */
+  touch-action: pan-y;
+}
+.carousel canvas { display: block; cursor: pointer; }
+.carousel figure { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); }
+.carousel-nav { display: flex; justify-content: center; gap: 1rem; margin-top: 0.5rem; }
+.carousel-nav button { padding: 0.1rem 1.1rem; font-size: 1.5rem; line-height: 1.4; }
+
+/* ASYMMETRIC LAYOUT (wide screens): uneven columns and offsets */
+@media (min-width: 48rem) {
+  header { --portrait-top: 2rem; grid-template-columns: 1fr auto; gap: 2rem; }
+  header img { order: 0; margin-top: var(--portrait-top); }
+  header::before { /* the image mirrors the portrait: same distance from the right edge */
+    left: auto;
+    right: calc(var(--portrait) / 2 - (1 - var(--bg-x)) * var(--bg-size));
+    top: calc(var(--portrait-top) + var(--portrait) / 2 - var(--bg-y) * var(--bg-size));
+    transform: none;
+  }
+  .tiles { grid-template-columns: 1fr 1fr; }
+
+  .personal-grid { grid-template-columns: 1fr 2.2fr; gap: 3rem; }
+  .photos { grid-column: 1 / -1; }
+}

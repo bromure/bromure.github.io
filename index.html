@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Xavier Drolet</title>
+  <meta name="description" content="One sentence on who you are and what you work on.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="images/icon3.png">
+</head>
+<body>
+
+  <!-- TRANSLATIONS: English is the element's text, French goes in its data-fr attribute.
+       Any element with data-fr switches language; others stay as they are. -->
+
+  <!-- TABS: each link's href matches a sector id below. The button's text is set by script.js. -->
+  <nav class="tabs" aria-label="Sections">
+    <div class="tab-list">
+      <a href="#about" data-fr="À propos">About</a>
+      <a href="#experience" data-fr="Expérience">Experience</a>
+      <a href="#personal" data-fr="Personnel">Personal</a>
+    </div>
+    <button id="lang-toggle" type="button">FR</button>
+  </nav>
+
+  <!-- The page is 3 sectors (panels) that stack over each other as you scroll.
+       Images live in the images/ folder: replace the placeholder files or change the paths. -->
+  <main>
+
+    <!-- SECTOR 1: header + about -->
+    <div class="sector" id="about">
+
+      <!-- HEADER: name, title, contact links, photo (square, under ~200 KB) -->
+      <header>
+        <div>
+          <h1>Xavier Drolet</h1>
+          <p data-fr="Étudiant à la Maîtrise professionnelle en apprentissage automatique (ML)">Professional Master's student in Machine Learning (ML)</p>
+          <p class="links">
+            <a href="mailto:xavier.drolet@mila.quebec" data-fr="Courriel">Email</a>
+            <a href="https://github.com/bromure">GitHub</a>
+            <a href="https://www.linkedin.com/in/xavier-drolet">LinkedIn</a>
+            <a href="papers/cv_Xavier_Drolet.pdf">CV</a>
+          </p>
+        </div>
+        <img src="images/profil.jpg" alt="Portrait of Xavier Drolet">
+      </header>
+
+      <!-- ABOUT: description and interests -->
+      <section>
+        <h2 data-fr="À propos">About</h2>
+        <p data-fr="Bachelier en sciences des données de l'Université de Montréal et actuellement étudiant à la Maitrise en ML en affiliation avec le Mila, 
+        je m'intéresse au application de l'appentissage automatique dans l'environement et le sport.
+        Après plus d'un an en tant que développeur agentique chez KPMG Canada, je suis maintenant consient du travail que demande l'implimentation de
+        solution d'automtisation, me poussant à m'intéresser à l'importance de l'application du ML de façon positive et responsable.">
+          Bachelor in Data Science from the University of Montreal and currently a Master's student in ML affiliated with Mila, 
+          I am interested in the application of machine learning in the environment and sports. 
+          After more than a year as an agentic developer at KPMG Canada, I am now aware of the work required to implement automation solutions, 
+          which has led me to be interested in the importance of applying ML in a positive and responsible way.
+        </p>
+        <h3 data-fr="Intérêts">Interests</h3>
+        <ul class="inline">
+          <li data-fr="Analytiques sportives">Sports Analytics</li>
+          <li data-fr="Apprentissage environnemental">Environmental ML</li>
+          <li data-fr="Apprentissage robotique">Robot Learning</li>
+          <li data-fr="Modélisation graphique">Graphical Modeling</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- SECTOR 2: projects + experience -->
+    <div class="sector" id="experience">
+
+      <!-- PROJECTS: copy an <article> block to add a project.
+           Put PDFs in the papers/ folder and match the file name below. -->
+      <section>
+        <h2 data-fr="Projets">Projects</h2>
+        <div class="tiles">
+          <article>
+            <h3 >SeiSM</h3>
+            <p data-fr="Utilisation de State Space Models (SSMs), 
+            sous la forme de Mamba-2, comme solution partielle à la complexité de la tâche de prédiction sismique, 
+            appliqué aux tâches de prédictions à court-terme et long-terme.">
+            Use of State Space Models (SSMs), 
+            under the form of Mamba-2, as a partial solution to the complexity of the seismic prediction task, 
+            applied to the tasks of short-term and long-term predictions.</p>
+            <!-- preview of page 1 (desktop browsers only) -->
+            <iframe class="preview" src="papers/SeiSM.pdf#page=1&view=FitH&toolbar=0&navpanes=0" loading="lazy" title="PDF preview" tabindex="-1"></iframe>
+            <a href="papers/SeiSM.pdf" data-fr="Article (PDF)">Paper (PDF)</a>
+          </article>
+
+          <article>
+            <h3 data-fr="Analyse, regroupement et classification des collisions routières à Montréal">
+                Analysis, clustering and classification of road collisions in Montreal
+            </h3>
+            <p data-fr="Indentification des profils de collisions à Montréal en regroupant les accidents selon 
+            leurs caractéristiques et evaluation de méthodes de regroupement sortant les distributions latentes.">
+            Identification of collision profiles in Montreal by grouping accidents according to their 
+            characteristics and evaluation of clustering methods revealing latent distributions.</p>
+            <!-- preview of page 1 (desktop browsers only) -->
+            <iframe class="preview" src="papers/collisions_mtl.pdf#page=1&view=FitH&toolbar=0&navpanes=0" loading="lazy" title="PDF preview" tabindex="-1"></iframe>
+            <a href="papers/collisions_mtl.pdf" data-fr="Article (PDF)">Paper (PDF)</a>
+          </article>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE: most recent first. Copy an <article> block to add a role.
+           The logo is the company or university (square, transparent or white background). -->
+      <section>
+        <h2 data-fr="Expérience">Experience</h2>
+        <div class="tiles">
+          <article>
+            <img class="logo" src="images/KPMG_blue_logo.svg" alt="KPMG logo" width="48" height="48">
+            <h3 data-fr="Consultant et developpeur agentique - Données & IA">Consultant and Agentic Developer - Data & AI</h3>
+            <p class="meta" data-fr="KPMG, Mai 2025 - Août 2025, Jan. 2026 - Oct. 2026">
+                KPMG, Mai 2025 - Aug. 2025, Jan. 2026 - Oct. 2026</p>
+            <p data-fr="Dirigé le développement de solutions d’entreprise intégrant l’IA (agents/assitants), 
+            de la livraison logicielle jusqu’à la planification des sprints et architectures, avec collaboration directe cliente">
+            Lead the development of enterprise solutions integrating AI (agents/assistants), 
+            from software delivery to sprint planning and architecture, with direct client collaboration.</p>
+          </article>
+
+          <article>
+            <img class="logo" src="images/mila_black.png" alt="Mila logo" width="48" height="48">
+            <h3 data-fr="Maitre en Informatique - Apprentissage Automatique">Master in Computer Science - Machine Learning</h3>
+            <p class="meta" data-fr="Université de Montréal & Mila, 2026 à 2028">University of Montreal & Mila, 2026 to 2028</p>
+            <p data-fr="Cours pertinents : Modèles Graphiques Probabilistes, Apprentissage de Représentation">
+             Relevant Coursework: Probabilistic Graphical Models, Representation Learning</p>
+          </article>
+
+          <article>
+            <img class="logo" src="images/Universite_de_Montreal_logo.svg" alt="UdeM logo" width="48" height="48">
+            <h3 data-fr="Bachelier en Mathématiques et Informatique - Science des données">Bachelor in Mathematics and Computer Science - Data Science</h3>
+            <p class="meta" data-fr="Université de Montréal, 2023 à 2026">University of Montreal, 2023 to 2026</p>
+            <p data-fr="Cours pertinents : Science des données, 
+            Analyse numérique, Apprentissage automatique et statistique, Projet en ML">
+             Relevant Coursework: Data Science,
+              Numerical Analysis, Machine/Statistical Learning, Advanced Project in ML, 
+              Sampling, Databases</p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <!-- SECTOR 3: personal -->
+    <div class="sector" id="personal">
+      <section>
+        <h2 data-fr="moi">me</h2>
+
+        <div class="personal-grid">
+
+          <!-- PHOTOS: carousel. Copy a <figure> to add a photo (5 or more looks best). -->
+          <div class="photos">
+            <h3 data-fr="ma vie hors de l'ordi">my life outside the computer</h3>
+            <div id="carousel" class="carousel" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Photos">
+              <figure><img src="images/taiwan.jpg" alt="taiwan"></figure>
+              <figure><img src="images/prague.jpg" alt="prague"></figure>
+              <figure><img src="images/split.jpg" alt="split"></figure>
+              <figure><img src="images/menton.jpg" alt="menton"></figure>
+              <figure><img src="images/lisbon.jpeg" alt="lisbon"></figure>
+              <figure><img src="images/whistler.jpeg" alt="whistler"></figure>
+              <figure><img src="images/prague_car.jpg" alt="prague car"></figure>
+              <figure><img src="images/mayrhofen.jpg" alt="mayrhofen"></figure>
+              <figure><img src="images/berlin.jpg" alt="berlin"></figure>
+            </div>
+            <div class="carousel-nav">
+              <button id="prev" type="button" aria-label="Previous / Précédent">&lsaquo;</button>
+              <button id="next" type="button" aria-label="Next / Suivant">&rsaquo;</button>
+            </div>
+          </div>
+
+          <!-- HOBBIES -->
+          <div>
+            <h3 data-fr="loisirs">hobbies</h3>
+            <p data-fr="
+            Quelques phrases libres sur vos loisirs.">
+            A few free sentences about your hobbies.</p>
+          </div>
+
+          <!-- TRAVEL -->
+          <div>
+            <h3 data-fr="voyages!">travel!</h3>
+            <p id="map-caption" class="meta" data-fr="pour but de remplir la carte, lentement mais sûrement...">trying to fill the map, slowly but surely...</p>
+            <!-- data-visited: country codes (ISO 3166-1 alpha-2, e.g. CA FR JP), separated by spaces -->
+            <div id="map" data-visited="CA US
+            AL AT BS BB BA BR TW CR HR CZ DK DO EE FI FR DE GR GG IE 
+            IT JP LU MQ MX MC ME NL PT PR RU SX CH SI ES SE TW GB "></div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- To add a section (Education, Publications, Teaching...), copy any
+         <section> above into a sector, change its id and heading, and fill the content. -->
+
+  </main>
+
+  <script src="map.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
